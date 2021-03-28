@@ -1,4 +1,10 @@
-import { Clock, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import {
+  Clock,
+  PCFSoftShadowMap,
+  PerspectiveCamera,
+  Scene,
+  WebGLRenderer,
+} from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import useWindow from "./useWindow";
 import useStatsUI from "./useStatsUI";
@@ -27,7 +33,11 @@ export default (scene: Scene, camera: PerspectiveCamera): Tick => {
 
   const renderer = new WebGLRenderer({
     canvas: canvas,
+    antialias: true,
   });
+
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = PCFSoftShadowMap;
 
   resizeHandler((sizes) => {
     updateRendererSize(renderer, camera, sizes);
